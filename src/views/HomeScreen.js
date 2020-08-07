@@ -28,18 +28,14 @@ class HomeScreen extends React.Component {
 
     render() {
         let pizzas = this.state.pizzas;
+
         return(<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>La Pizza !</Text>
             <FlatList
                 data={pizzas}
                 renderItem={ ({ item }) => (
                     <ListItem item={item} navigation={this.props.navigation} />
                 ) }
                 keyExtractor={item => item.id}
-            />
-            <Button
-                title="Go to Product"
-                onPress={() => this.props.navigation.navigate('ProductScreen')}
             />
         </View>)
     }

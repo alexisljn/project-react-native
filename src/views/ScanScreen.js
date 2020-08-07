@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, Vibration, Button, TouchableOpacity} from 'react-native';
 import { Camera } from 'expo-camera';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 class ScanScreen extends React.Component {
@@ -23,14 +23,35 @@ class ScanScreen extends React.Component {
         })
     }
 
+    addProductToHistory= async (product) =>
+    {
+        try {
+            let history = JSON.parse(await AsyncStorage.getItem('product_history'));
 
-    handleBarcode = ({data}) =>
+            if (history === null) {
+                history = [];
+            }
+
+            console.log(history);
+            history.push(product);
+            console.log(history);
+            console.log(typeof history);
+            console.log(history.length);
+            await AsyncStorage.setItem('product_history', JSON.stringify(history));
+            console.log('its  all good buddy')
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    handleBarcode =  async ({data}) =>
     {
         this.setState({hasScanned: true});
         Vibration.vibrate();
         fetch(`https://world.openfoodfacts.org/api/v0/product/${data}.json`)
             .then((response) => response.json())
             .then((json) => {
+                this.addProductToHistory(json.product);
                 this.props.navigation.navigate('ProductScreen', {item: json.product})
             })
             .catch((error) => {

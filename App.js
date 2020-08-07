@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "./src/views/HomeScreen";
 import ScanScreen from "./src/views/ScanScreen";
-import FavScreen from "./src/views/FavScreen";
+import HistoryScreen from "./src/views/HistoryScreen";
 import createStackNavigator from "@react-navigation/stack/src/navigators/createStackNavigator";
 import ProductScreen from "./src/views/ProductScreen";
 import {Icon} from 'react-native-elements';
@@ -19,7 +19,6 @@ function HomeStack() {
             <Stack.Navigator>
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="ProductScreen" component={ProductScreen} />
-                <Stack.Screen name="FavScreen" component={FavScreen} />
             </Stack.Navigator>
     );
 }
@@ -36,8 +35,12 @@ export default function App() {
                 }}
                 />
                 <Tab.Screen name="Scan" component={ScanScreen} options={{
-                    tabBarLabel:'Bienvenue !',
+                    tabBarLabel:'Scan',
                     tabBarIcon: () => <Icon name="barcode-scan" type="material-community" />
+                }} />
+                <Tab.Screen name="History" component={HistoryScreen} options={{
+                    tabBarLabel:'History',
+                    tabBarIcon: () => <Icon name="history" type="material-community" />
                 }} />
             </Tab.Navigator>
         </NavigationContainer>
